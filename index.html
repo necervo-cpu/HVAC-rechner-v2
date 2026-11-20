@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="dark light" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="HVAC-R Rechner" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F2F7" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
     <title>HVAC-R Baustellen-Rechner</title>
@@ -39,8 +41,9 @@
         var root = document.documentElement, link = document.getElementById('agFonts');
         if (!link || !document.fonts || !document.fonts.load) return;
         var done = function () { root.classList.remove('icons-pending'); };
+        if (typeof navigator !== 'undefined' && navigator.onLine === false) return;
         root.classList.add('icons-pending');
-        setTimeout(done, 4000);
+        setTimeout(done, 1500);
         link.addEventListener('load', function () {
           setTimeout(function () {
             document.fonts.load('24px "Material Symbols Rounded"').then(done, done);
