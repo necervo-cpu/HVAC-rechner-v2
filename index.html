@@ -21,39 +21,8 @@
         root.setAttribute('data-theme', saved === 'light' || saved === 'dark' ? saved : (light ? 'light' : 'dark'));
       })();
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      id="agFonts"
-      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0..200&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0..200&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
-    <script>
-      (function () {
-        var root = document.documentElement, link = document.getElementById('agFonts');
-        if (!link || !document.fonts || !document.fonts.load) return;
-        var done = function () { root.classList.remove('icons-pending'); };
-        if (typeof navigator !== 'undefined' && navigator.onLine === false) return;
-        root.classList.add('icons-pending');
-        setTimeout(done, 1500);
-        link.addEventListener('load', function () {
-          setTimeout(function () {
-            document.fonts.load('24px "Material Symbols Rounded"').then(done, done);
-          }, 0);
-        });
-        link.addEventListener('error', done);
-      })();
-    </script>
-    <script type="module" crossorigin src="./assets/index-Bm2E1Ll7.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CnixVxLQ.css">
+    <script type="module" crossorigin src="./assets/index-DY4kz4Eg.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DDVgoiYr.css">
   <link rel="manifest" href="./manifest.webmanifest"></head>
   <body>
     <div id="root"></div>
