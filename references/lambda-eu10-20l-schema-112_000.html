@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F2F7">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
+  <title>Lambda EU10–20L · Prinzipschema 112_000 (R&amp;I Hairline)</title>
+  <script>
+    (function () {
+      var root = document.documentElement, saved = null;
+      try { saved = localStorage.getItem("ag-theme"); } catch (e) {}
+      var light = window.matchMedia("(prefers-color-scheme: light)").matches;
+      root.setAttribute("data-theme", saved === "light" || saved === "dark" ? saved : (light ? "light" : "dark"));
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link id="agFonts" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0..200&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0..200&display=swap" rel="stylesheet"></noscript>
+  <script>
+    (function () {
+      var root = document.documentElement, link = document.getElementById("agFonts");
+      if (!link || !document.fonts || !document.fonts.load) return;
+      var done = function () { root.classList.remove("icons-pending"); };
+      root.classList.add("icons-pending");
+      setTimeout(done, 4000);
+      link.addEventListener("load", function () {
+        setTimeout(function () { document.fonts.load('24px "Material Symbols Rounded"').then(done, done); }, 0);
+      });
+      link.addEventListener("error", done);
+    })();
+  </script>
+  <link rel="stylesheet" href="../src/styles/global.css">
+  <style>
+    .flow-card {
+      --media-hot: var(--system-red);
+      --media-liq: var(--system-blue);
+      --media-suc: var(--system-cyan);
+      --media-sensor: var(--system-green);
+      --media-relay: var(--system-cyan);
+      --media-pwm: var(--system-blue);
+      --media-in24: var(--system-orange);
+      --hair-stroke: var(--text-primary);
+      --hair-muted: color-mix(in oklab, var(--text-primary) 78%, var(--text-secondary) 22%);
+      --hair-subtle: var(--text-secondary);
+      padding: 0;
+      margin-bottom: 2.25rem;
+    }
+    .flow-tools {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .flow-style-seg { flex: 1; min-width: 0; }
+    .flow-scroll {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-x pan-y;
+      overscroll-behavior-x: contain;
+      scrollbar-width: thin;
+      margin-top: 0.75rem;
+    }
+    .flow-scroll .flow-svg {
+      display: block;
+      width: 100%;
+      min-width: 880px;
+      height: auto;
+      font-family: var(--font-sans);
+    }
+    .flow-pan-hint {
+      display: none;
+      margin: 0.375rem 0.25rem 0;
+      color: var(--text-secondary);
+      font-size: var(--text-caption);
+    }
+    @media (max-width: 900px) {
+      .flow-pan-hint { display: block; }
+    }
+
+    /* Rohre & Linien */
+    .pipe-base, .pipe-flow {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.25s ease, opacity 0.18s ease;
+    }
+    .pipe-base { stroke: var(--hair-stroke); stroke-width: 1.3; opacity: 0.56; }
+    .pipe-flow {
+      stroke: var(--hair-stroke);
+      stroke-width: 1.55;
+      stroke-dasharray: 4 20;
+      animation: flow 1.35s linear infinite;
+      opacity: 0.96;
+    }
+    @keyframes flow { to { stroke-dashoffset: -24; } }
+
+    .arrow {
+      fill: none;
+      stroke: var(--hair-stroke);
+      stroke-width: 1.45;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .flow-card[data-style="media"] .pipe-base { opacity: 0.44; }
+    .flow-card[data-style="media"] .seg-hot { stroke: var(--media-hot); }
+    .flow-card[data-style="media"] .seg-liq { stroke: var(--media-liq); }
+
+    .port-dot { stroke: none; fill: var(--hair-stroke); transition: fill 0.2s ease; }
+    .flow-card[data-style="media"] .dot-hot { fill: var(--media-hot); }
+    .flow-card[data-style="media"] .dot-liq { fill: var(--media-liq); }
+
+    .sym-outline {
+      fill: none;
+      stroke: var(--hair-stroke);
+      stroke-width: 1.3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .sym-detail {
+      fill: none;
+      stroke: var(--hair-subtle);
+      stroke-width: 1.1;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .sym-dashed {
+      fill: none;
+      stroke: var(--hair-subtle);
+      stroke-width: 1.05;
+      stroke-dasharray: 3 3;
+      stroke-linecap: round;
+    }
+
+    /* Badges */
+    .badge-sensor, .badge-relay, .badge-pwm, .badge-input24v {
+      stroke-width: 1.2;
+      stroke-linejoin: round;
+      transition: stroke 0.2s ease, fill 0.2s ease;
+    }
+    .badge-sensor { stroke: var(--hair-stroke); fill: transparent; }
+    .badge-relay  { stroke: var(--hair-stroke); fill: transparent; }
+    .badge-pwm    { stroke: var(--hair-stroke); fill: transparent; }
+    .badge-input24v { stroke: var(--hair-stroke); fill: transparent; }
+
+    .flow-card[data-style="media"] .badge-sensor {
+      stroke: var(--media-sensor);
+      fill: color-mix(in oklab, var(--media-sensor) 12%, transparent);
+    }
+    .flow-card[data-style="media"] .badge-relay {
+      stroke: var(--media-relay);
+      fill: color-mix(in oklab, var(--media-relay) 12%, transparent);
+    }
+    .flow-card[data-style="media"] .badge-pwm {
+      stroke: var(--media-pwm);
+      fill: color-mix(in oklab, var(--media-pwm) 12%, transparent);
+    }
+    .flow-card[data-style="media"] .badge-input24v {
+      stroke: var(--media-in24);
+      fill: color-mix(in oklab, var(--media-in24) 12%, transparent);
+    }
+
+    .badge-text {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      text-anchor: middle;
+      dominant-baseline: central;
+      fill: var(--text-primary);
+    }
+    .flow-card[data-style="media"] .text-sensor { fill: var(--media-sensor); }
+    .flow-card[data-style="media"] .text-relay  { fill: var(--media-relay); }
+    .flow-card[data-style="media"] .text-pwm    { fill: var(--media-pwm); }
+    .flow-card[data-style="media"] .text-in24   { fill: var(--media-in24); }
+
+    /* R&I-Messstellen & Typografie */
+    .inst-bubble { fill: transparent; stroke: var(--hair-stroke); stroke-width: 1.35; }
+    .inst-line { fill: none; stroke: var(--hair-subtle); stroke-width: 1.1; stroke-dasharray: 2.5 2.5; }
+    .inst-tap { fill: var(--hair-stroke); }
+    .inst-text { fill: var(--text-primary); font-family: var(--font-mono); font-size: 12px; font-weight: 600; text-anchor: middle; dominant-baseline: central; }
+    .flow-card[data-style="media"] .inst-bubble { stroke: var(--media-sensor); fill: color-mix(in oklab, var(--media-sensor) 12%, transparent); }
+    .flow-card[data-style="media"] .inst-line { stroke: var(--media-sensor); opacity: 0.85; }
+    .flow-card[data-style="media"] .inst-tap { fill: var(--media-sensor); }
+    .flow-card[data-style="media"] .inst-text { fill: var(--media-sensor); }
+
+    .lbl-main { fill: var(--text-primary); font-size: 13px; font-weight: 600; }
+    .lbl-sub { fill: var(--hair-muted); font-size: 12px; font-weight: 400; }
+    .lbl-mono { fill: var(--text-primary); font-family: var(--font-mono); font-size: 12px; font-weight: 600; }
+
+    /* Hinweiskasten */
+    .note-box {
+      margin-top: 1.25rem;
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--border-separator);
+      background: var(--surface-inner-bg);
+      font-size: var(--text-sub);
+    }
+    .note-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .note-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pipe-flow { animation: none; opacity: 0; }
+    }
+    @media (forced-colors: active) {
+      .pipe-base, .pipe-flow, .sym-outline, .arrow, .inst-bubble,
+      .badge-sensor, .badge-relay, .badge-pwm, .badge-input24v { stroke: CanvasText; }
+      .sym-detail, .sym-dashed, .inst-line { stroke: GrayText; }
+      .lbl-main, .lbl-mono, .inst-text, .badge-text { fill: CanvasText; }
+      .lbl-sub { fill: GrayText; }
+      .port-dot, .inst-tap { fill: CanvasText; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-canvas" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <div class="app-topbar">
+      <a class="back-btn" href="../index.html"><span class="material-symbols-rounded" aria-hidden="true">chevron_left</span>Übersicht</a>
+      <button class="icon-btn" id="themeToggleBtn" type="button" aria-label="Erscheinungsbild wechseln">
+        <span class="material-symbols-rounded" id="themeToggleIcon">light_mode</span>
+      </button>
+    </div>
+
+    <header class="app-header">
+      <div class="app-header-text">
+        <h1 class="brand-title">Lambda EU10–20L</h1>
+        <p class="brand-subtitle">Prinzipschema 112_000 · 2-Speicherlösung mit Boiler und Pufferspeicher</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="flow-card" id="flowCard" data-style="media">
+        <div class="flow-tools">
+          <div class="segmented-control flow-style-seg" id="styleSegment" role="group" aria-label="Darstellung">
+            <button type="button" class="segmented-option" data-style="media" aria-pressed="true">Medienfarben</button>
+            <button type="button" class="segmented-option" data-style="hairline" aria-pressed="false">Monochrom</button>
+          </div>
+        </div>
+
+        <div class="flow-scroll">
+          <svg class="flow-svg" id="flowSvg" viewBox="0 0 880 500" role="img" aria-label="Lambda Prinzipschema 112_000">
+            <!-- 1. Außeneinheit Lambda EU10–20L -->
+            <g id="grp-outdoor">
+              <!-- Gehäuse -->
+              <rect x="24" y="150" width="76" height="120" rx="3" fill="none" class="sym-outline" />
+              <!-- Sockel / unterer Korpus -->
+              <rect x="24" y="218" width="76" height="52" fill="none" class="sym-outline" />
+              <!-- Organisches Astmuster (Lamellen) -->
+              <path d="M42,218 Q46,186 52,154 M52,192 Q58,176 68,162 M48,174 Q40,166 32,158 M60,218 Q62,196 68,172 M66,190 Q74,180 84,170" class="sym-detail" />
+              <text x="62" y="248" class="inst-text" text-anchor="middle">EU10-20L</text>
+
+              <!-- Kondensat DN100 -->
+              <path d="M40,270 V380" class="sym-outline" />
+              <text x="48" y="340" class="lbl-sub" text-anchor="start">DN100</text>
+              <!-- Schotterbett -->
+              <path d="M26,384 L54,384 M28,388 L52,388 M32,392 L48,392" class="sym-detail" />
+            </g>
+
+            <!-- 2. Gebäudewand -->
+            <g id="grp-wall">
+              <rect x="170" y="140" width="16" height="280" fill="none" class="sym-outline" />
+              <!-- 45°-Schraffur -->
+              <path d="M170,160 L186,144 M170,190 L186,174 M170,220 L186,204 M170,250 L186,234 M170,280 L186,264 M170,310 L186,294 M170,340 L186,324 M170,370 L186,354 M170,400 L186,384" class="sym-detail" />
+            </g>
+
+            <!-- 3. Außenfühler X42 -->
+            <g id="grp-x42">
+              <circle cx="140" cy="166" r="12" fill="none" class="badge-sensor" />
+              <text x="140" y="166" class="inst-text text-sensor">X42</text>
+              <line x1="152" y1="166" x2="170" y2="166" class="sym-detail" />
+            </g>
+
+            <!-- 4. Rohrleitungen Primärkreis (Wärmepumpe zur Wand und Modul) -->
+            <g class="pipe-group">
+              <!-- Vorlauf WP bis USV -->
+              <path d="M62,270 V290 H240 Q250,290 250,280 V190 Q250,180 260,180 H280" class="pipe-base seg-hot" />
+              <path d="M62,270 V290 H240 Q250,290 250,280 V190 Q250,180 260,180 H280" class="pipe-flow seg-hot" />
+
+              <!-- Rücklauf WP von Modul -->
+              <path d="M280,260 H230 Q220,260 220,270 V310 H50 V270" class="pipe-base seg-liq" />
+              <path d="M280,260 H230 Q220,260 220,270 V310 H50 V270" class="pipe-flow seg-liq" />
+            </g>
+
+            <!-- Pfeile und Labels Primärkreis -->
+            <text x="104" y="282" class="lbl-sub">Vorlauf</text>
+            <text x="104" y="324" class="lbl-sub">Rücklauf</text>
+
+            <!-- Entleerung außen an WP -->
+            <path d="M50,310 V340" class="sym-detail" />
+            <polygon points="46,334 54,334 50,340" class="sym-outline" />
+
+            <!-- Entleerungsgruppe innen -->
+            <path d="M200,290 V340 M210,310 V340" class="sym-detail" />
+            <polygon points="196,334 204,334 200,340" class="sym-outline" />
+            <polygon points="206,334 214,334 210,340" class="sym-outline" />
+            <text x="205" y="360" class="lbl-sub" text-anchor="middle">Entleerung</text>
+
+            <!-- Sicherheitsgruppe außen an Vorlauf -->
+            <path d="M62,280 V260" class="sym-detail" />
+            <circle cx="62" cy="254" r="5" fill="none" class="sym-outline" />
+            <line x1="58" y1="254" x2="66" y2="254" class="sym-detail" />
+
+            <!-- Kabeltrasse nach außen -->
+            <path d="M36,270 V420 H200" class="sym-dashed" />
+            <text x="75" y="440" class="lbl-sub">230V / 400V / Bus</text>
+
+            <!-- 5. Hydraulikmodul (Inneneinheit) -->
+            <g id="grp-hydr-mod">
+              <!-- Modulrahmen -->
+              <rect x="270" y="140" width="84" height="150" rx="3" fill="none" class="sym-dashed" />
+              <text x="312" y="132" class="lbl-sub" text-anchor="middle">Hydraulikmodul</text>
+
+              <!-- Umschaltventil USV X28 -->
+              <polygon points="280,175 280,185 295,180" class="sym-outline" />
+              <polygon points="310,180 325,175 325,185" class="sym-outline" />
+              <polygon points="290,165 300,180 310,165" class="sym-outline" />
+              <circle cx="295" cy="180" r="1.5" class="port-dot" />
+
+              <!-- USV Klemmen-Badge X28 -->
+              <circle cx="330" cy="156" r="11" fill="none" class="badge-relay" />
+              <text x="330" y="156" class="inst-text text-relay">X28</text>
+
+              <!-- Elektro-Heizstab X9 -->
+              <rect x="332" y="174" width="16" height="12" fill="none" class="sym-outline" />
+              <path d="M336,177 L340,183 L344,177" class="sym-detail" />
+              <circle cx="340" cy="204" r="11" fill="none" class="badge-relay" />
+              <text x="340" y="204" class="inst-text text-relay">X9</text>
+
+              <!-- Ladepumpe Primärkreis mit X2 und X57 -->
+              <circle cx="312" cy="260" r="12" fill="none" class="sym-outline" />
+              <polygon points="304,254 304,266 318,260" class="sym-outline" />
+              <circle cx="296" cy="232" r="11" fill="none" class="badge-relay" />
+              <text x="296" y="232" class="inst-text text-relay">X2</text>
+              <circle cx="328" cy="232" r="11" fill="none" class="badge-pwm" />
+              <text x="328" y="232" class="inst-text text-pwm">X57</text>
+
+              <!-- Membran-Ausdehnungsgefäß ADG am Rücklauf -->
+              <path d="M340,260 V278" class="sym-detail" />
+              <circle cx="340" cy="286" r="8" fill="none" class="sym-outline" />
+              <path d="M332,286 Q340,282 348,286" class="sym-detail" />
+            </g>
+
+            <!-- 6. AHC-Hydraulikregler & Touch-Display -->
+            <g id="grp-ctrl">
+              <rect x="380" y="190" width="48" height="34" rx="2" fill="none" class="sym-outline" />
+              <text x="404" y="211" class="inst-text" text-anchor="middle">AHC</text>
+
+              <!-- Touch-Display -->
+              <rect x="386" y="146" width="38" height="26" rx="3" fill="none" class="sym-outline" />
+              <circle cx="405" cy="158" r="4" fill="none" class="sym-detail" />
+              <path d="M405,158 V166" class="sym-detail" />
+
+              <!-- Bus / Zuleitung -->
+              <path d="M404,224 V280" class="sym-dashed" />
+              <text x="385" y="300" class="lbl-sub">230V / LAN</text>
+            </g>
+
+            <!-- 7. Boiler (Trinkwasserspeicher links) -->
+            <g id="grp-boiler">
+              <rect x="470" y="160" width="60" height="180" rx="14" fill="none" class="sym-outline" />
+              <text x="500" y="148" class="lbl-main" text-anchor="middle">Boiler</text>
+
+              <!-- Glattrohr-Wärmetauscher (Schlange) -->
+              <path d="M485,210 Q515,220 485,230 Q515,240 485,250 Q515,260 485,270 Q515,280 485,290" class="pipe-base seg-hot" />
+
+              <!-- Trinkwasseranschlüsse KW und WW -->
+              <text x="546" y="178" class="lbl-mono">WW</text>
+              <text x="546" y="338" class="lbl-mono">KW</text>
+              <circle cx="530" cy="175" r="2.2" class="port-dot" />
+              <circle cx="530" cy="335" r="2.2" class="port-dot" />
+
+              <!-- Zirkulationspumpe X5 & Fühler X39 -->
+              <circle cx="570" cy="250" r="9" fill="none" class="sym-outline" />
+              <polygon points="576,244 576,256 564,250" class="sym-outline" />
+              <circle cx="570" cy="222" r="11" fill="none" class="badge-relay" />
+              <text x="570" y="222" class="inst-text text-relay">X5</text>
+              <circle cx="570" cy="278" r="11" fill="none" class="badge-sensor" />
+              <text x="570" y="278" class="inst-text text-sensor">X39</text>
+            </g>
+
+            <!-- Boiler-Fühler X35 (oben) und X36 (unten) -->
+            <g id="grp-x35">
+              <circle cx="500" cy="180" r="11" fill="none" class="badge-sensor" />
+              <text x="500" y="180" class="inst-text text-sensor">X35</text>
+            </g>
+            <g id="grp-x36">
+              <circle cx="500" cy="310" r="11" fill="none" class="badge-sensor" />
+              <text x="500" y="310" class="inst-text text-sensor">X36</text>
+            </g>
+
+            <!-- 8. Pufferspeicher (Heizungspufferspeicher rechts) -->
+            <g id="grp-puffer">
+              <rect x="620" y="160" width="60" height="180" rx="14" fill="none" class="sym-outline" />
+              <text x="650" y="148" class="lbl-main" text-anchor="middle">Puffer</text>
+            </g>
+
+            <!-- Puffer-Fühler X31 oben -->
+            <g id="grp-x31">
+              <circle cx="650" cy="180" r="11" fill="none" class="badge-sensor" />
+              <text x="650" y="180" class="inst-text text-sensor">X31</text>
+            </g>
+
+            <!-- 9. Verbindung USV zu Boiler und Puffer -->
+            <g class="pipe-group">
+              <!-- Warmwasservorlauf nach Boiler WT -->
+              <path d="M300,165 V100 H465 Q470,100 470,110 V210 H485" class="pipe-base seg-hot" />
+              <path d="M300,165 V100 H465 Q470,100 470,110 V210 H485" class="pipe-flow seg-hot" />
+
+              <!-- Heizungsvorlauf nach Puffer/HKR -->
+              <path d="M348,180 H620" class="pipe-base seg-hot" />
+              <path d="M348,180 H620" class="pipe-flow seg-hot" />
+
+              <!-- Rücklauf Boiler WT unten zurück zu Sammler -->
+              <path d="M485,290 H465 Q460,290 460,280 V260 H324" class="pipe-base seg-liq" />
+              <path d="M485,290 H465 Q460,290 460,280 V260 H324" class="pipe-flow seg-liq" />
+
+              <!-- Rücklauf Puffer unten zu Sammler -->
+              <path d="M620,320 H455 Q450,320 450,310 V260" class="pipe-base seg-liq" />
+              <path d="M620,320 H455 Q450,320 450,310 V260" class="pipe-flow seg-liq" />
+            </g>
+
+            <!-- 10. Gemischte Heizkreise (HKR 1, HKR 2, HKR 3) -->
+            <!-- Vorlauf-Verteiler von Puffer hoch zu HKR -->
+            <g class="pipe-group">
+              <path d="M680,180 H720 Q730,180 730,170 V80 H820" class="pipe-base seg-hot" />
+              <path d="M680,180 H720 Q730,180 730,170 V80 H820" class="pipe-flow seg-hot" />
+
+              <!-- Rücklauf-Sammler von HKR zurück zu Puffer -->
+              <path d="M820,360 H740 Q730,360 730,350 V320 H680" class="pipe-base seg-liq" />
+              <path d="M820,360 H740 Q730,360 730,350 V320 H680" class="pipe-flow seg-liq" />
+            </g>
+
+            <!-- HKR 1 (Aktiv) -->
+            <g id="grp-hkr1">
+              <circle cx="820" cy="46" r="14" fill="none" class="sym-outline" />
+              <text x="820" y="46" class="inst-text" text-anchor="middle">HKR1</text>
+
+              <!-- Mischer X11 -->
+              <polygon points="814,140 826,140 820,150" class="sym-outline" />
+              <circle cx="820" cy="150" r="1.5" class="port-dot" />
+              <circle cx="848" cy="146" r="11" fill="none" class="badge-relay" />
+              <text x="848" y="146" class="inst-text text-relay">X11</text>
+
+              <!-- Pumpe HKR1 X7 -->
+              <circle cx="820" cy="110" r="10" fill="none" class="sym-outline" />
+              <polygon points="814,116 826,116 820,104" class="sym-outline" />
+              <circle cx="848" cy="110" r="11" fill="none" class="badge-relay" />
+              <text x="848" y="110" class="inst-text text-relay">X7</text>
+
+              <!-- Vorlauffühler HKR1 X37 -->
+              <circle cx="848" cy="74" r="11" fill="none" class="badge-sensor" />
+              <text x="848" y="74" class="inst-text text-sensor">X37</text>
+            </g>
+
+            <!-- HKR 2 (Optional / Gestrichelt) -->
+            <g id="grp-hkr2">
+              <circle cx="770" cy="46" r="14" fill="none" class="sym-dashed" />
+              <text x="770" y="46" class="inst-text" text-anchor="middle">HKR2</text>
+              <circle cx="770" cy="110" r="11" fill="none" class="badge-relay" />
+              <text x="770" y="110" class="inst-text text-relay">X8</text>
+              <circle cx="770" cy="146" r="11" fill="none" class="badge-relay" />
+              <text x="770" y="146" class="inst-text text-relay">X12</text>
+            </g>
+          </svg>
+        </div>
+
+        <p class="flow-pan-hint">Schema zum Verschieben seitlich wischen.</p>
+
+        <!-- Hinweiskasten nach Lambda Vorgabe -->
+        <div class="note-box">
+          <div class="note-title">
+            <span class="material-symbols-rounded" aria-hidden="true">info</span>
+            ZU BEACHTEN (Prinzipschema 112_000 · Stand 2026/2):
+          </div>
+          <ul class="note-list">
+            <li><strong>Wärmetauscherfläche im Boiler:</strong> Sollte ca. <strong>0,4 m² pro kW</strong> Wärmepumpen-Nennleistung betragen.</li>
+            <li><strong>Brauchwasservolumen:</strong> Mindestens <strong>300 l</strong> Volumen für Trinkwasser vorsehen.</li>
+            <li><strong>Puffervolumen Heizung:</strong> Mindestens <strong>6,4 l pro kW</strong> Nennleistung als Puffervolumen vorsehen.</li>
+            <li><strong>Sicherheitseinrichtungen im Gebäude:</strong> Im Gebäude <strong>keine automatischen Entlüfter und Sicherheitsventile</strong> verwenden (das Sicherheitsventil befindet sich frostsicher außen im Gerät).</li>
+            <li><strong>Aktive Kühlung:</strong> Taupunkt bei aktiver Kühlung zwingend beachten (Taupunktwächter an Eingang X51/X58).</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var card = document.getElementById("flowCard");
+      var styleSeg = document.getElementById("styleSegment");
+      if (styleSeg && card) {
+        styleSeg.addEventListener("click", function (e) {
+          var btn = e.target.closest("button[data-style]");
+          if (!btn) return;
+          styleSeg.querySelectorAll("button").forEach(function (b) {
+            b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+          });
+          card.setAttribute("data-style", btn.getAttribute("data-style"));
+        });
+      }
+      var themeBtn = document.getElementById("themeToggleBtn");
+      var themeIcon = document.getElementById("themeToggleIcon");
+      if (themeBtn && themeIcon) {
+        themeBtn.addEventListener("click", function () {
+          var cur = document.documentElement.getAttribute("data-theme") || "dark";
+          var next = cur === "dark" ? "light" : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try { localStorage.setItem("ag-theme", next); } catch (e) {}
+          themeIcon.textContent = next === "dark" ? "light_mode" : "dark_mode";
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
