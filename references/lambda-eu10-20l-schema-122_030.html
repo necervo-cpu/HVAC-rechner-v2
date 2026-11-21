@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F2F7">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
+  <title>Lambda EU10–20L · Prinzipschema 122_030 (R&I Hairline)</title>
+  <script>
+    (function () {
+      var root = document.documentElement, saved = null;
+      try { saved = localStorage.getItem("ag-theme"); } catch (e) {}
+      var urlParams = new URLSearchParams(window.location.search);
+      var queryTheme = urlParams.get("theme");
+      var light = window.matchMedia("(prefers-color-scheme: light)").matches;
+      root.setAttribute("data-theme", queryTheme === "light" || queryTheme === "dark" ? queryTheme : (saved === "light" || saved === "dark" ? saved : (light ? "light" : "dark")));
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link id="agFonts" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0..200&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0..200&display=swap" rel="stylesheet"></noscript>
+  <script>
+    (function () {
+      var root = document.documentElement, link = document.getElementById("agFonts");
+      if (!link || !document.fonts || !document.fonts.load) return;
+      var done = function () { root.classList.remove("icons-pending"); };
+      root.classList.add("icons-pending");
+      setTimeout(done, 4000);
+      link.addEventListener("load", function () {
+        setTimeout(function () { document.fonts.load('24px "Material Symbols Rounded"').then(done, done); }, 0);
+      });
+      link.addEventListener("error", done);
+    })();
+  </script>
+  <style>
+    :root {
+      --system-red: #ff453a;
+      --system-blue: #0a84ff;
+      --system-cyan: #64d2ff;
+      --system-green: #30d158;
+      --system-orange: #ff9f0a;
+      --text-primary: #ffffff;
+      --text-secondary: rgba(235, 235, 245, 0.65);
+      --border-separator: rgba(84, 84, 88, 0.65);
+      --surface-inner-bg: rgba(118, 118, 128, 0.24);
+      --canvas-bg: #000000;
+      --accent: #a8c7fa;
+      --on-accent: #062e6f;
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+      --radius-control: 14px;
+      --radius-pill: 9999px;
+      --text-caption: 12px;
+      --text-sub: 13px;
+    }
+    [data-theme="light"] {
+      --system-red: #d70015;
+      --system-blue: #007aff;
+      --system-cyan: #0071a4;
+      --system-green: #248a3d;
+      --system-orange: #c96e00;
+      --text-primary: #000000;
+      --text-secondary: rgba(60, 60, 67, 0.65);
+      --border-separator: rgba(60, 60, 67, 0.25);
+      --surface-inner-bg: rgba(118, 118, 128, 0.12);
+      --canvas-bg: #f2f2f7;
+      --accent: #0b57d0;
+      --on-accent: #ffffff;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--canvas-bg);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .ambient-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 0%, color-mix(in oklab, var(--accent) 15%, transparent), transparent 70%);
+      opacity: 0.35;
+      z-index: 0;
+    }
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      max-width: 1060px;
+      margin: 0 auto;
+      padding-top: max(12px, env(safe-area-inset-top));
+      padding-left: max(1.25rem, env(safe-area-inset-left));
+      padding-right: max(1.25rem, env(safe-area-inset-right));
+      padding-bottom: max(3rem, env(safe-area-inset-bottom));
+    }
+    .app-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: var(--text-sub);
+      font-weight: 500;
+    }
+    .icon-btn {
+      background: none;
+      border: none;
+      padding: 8px;
+      color: var(--accent);
+      cursor: pointer;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .scheme-select-wrapper {
+      position: relative;
+    }
+    .scheme-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: var(--surface-inner-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--border-separator);
+      border-radius: var(--radius-control);
+      padding: 6px 28px 6px 12px;
+      font-size: var(--text-sub);
+      font-family: var(--font-sans);
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .app-header { margin-bottom: 1.5rem; }
+    .brand-title { font-size: 1.75rem; font-weight: 700; margin: 0 0 0.25rem; letter-spacing: -0.02em; }
+    .brand-subtitle { font-size: 0.95rem; color: var(--text-secondary); margin: 0; }
+
+    .flow-card {
+      --media-hot: var(--system-red);
+      --media-liq: var(--system-blue);
+      --media-sensor: var(--system-green);
+      --media-relay: var(--system-cyan);
+      --media-pwm: var(--system-blue);
+      --media-in24: var(--system-orange);
+      --hair-stroke: var(--text-primary);
+      --hair-muted: color-mix(in oklab, var(--text-primary) 78%, var(--text-secondary) 22%);
+      --hair-subtle: var(--text-secondary);
+      padding: 0;
+      margin-bottom: 2rem;
+    }
+    .flow-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+    .flow-card-title { font-size: 1.15rem; font-weight: 600; margin: 0; }
+    .flow-card-sub { font-size: var(--text-caption); color: var(--text-secondary); margin: 0.15rem 0 0; }
+
+    .segmented-control {
+      display: inline-flex;
+      background: var(--surface-inner-bg);
+      border-radius: var(--radius-control);
+      padding: 3px;
+      border: 1px solid var(--border-separator);
+    }
+    .segmented-option {
+      background: transparent;
+      border: none;
+      padding: 6px 14px;
+      font-size: var(--text-sub);
+      font-weight: 500;
+      color: var(--text-secondary);
+      border-radius: 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .segmented-option[aria-pressed="true"] {
+      background: var(--accent);
+      color: var(--on-accent);
+      font-weight: 600;
+    }
+
+    .flow-scroll {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-x pan-y;
+      overscroll-behavior-x: contain;
+      scrollbar-width: thin;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--border-separator);
+      background: var(--surface-inner-bg);
+      padding: 1rem 0.5rem;
+      box-sizing: border-box;
+    }
+    .flow-svg {
+      display: block;
+      width: 100%;
+      min-width: 940px;
+      height: auto;
+      font-family: var(--font-sans);
+    }
+    .flow-pan-hint {
+      display: none;
+      margin: 0.5rem 0.25rem 0;
+      color: var(--text-secondary);
+      font-size: var(--text-caption);
+    }
+    @media (max-width: 940px) {
+      .flow-pan-hint { display: block; }
+    }
+
+    /* Rohre & Linien */
+    .pipe-base, .pipe-flow {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.25s ease, opacity 0.18s ease;
+    }
+    .pipe-base { stroke: var(--hair-stroke); stroke-width: 1.3; opacity: 0.45; }
+    .pipe-flow {
+      stroke: var(--hair-stroke);
+      stroke-width: 1.55;
+      stroke-dasharray: 4 20;
+      animation: flow 1.35s linear infinite;
+      opacity: 0.96;
+    }
+    @keyframes flow { to { stroke-dashoffset: -24; } }
+
+    .flow-card[data-style="media"] .pipe-base { opacity: 0.44; }
+    .flow-card[data-style="media"] .seg-hot { stroke: var(--media-hot); }
+    .flow-card[data-style="media"] .seg-liq { stroke: var(--media-liq); }
+
+    .port-dot { stroke: none; fill: var(--hair-stroke); transition: fill 0.2s ease; }
+    .flow-card[data-style="media"] .dot-hot { fill: var(--media-hot); }
+    .flow-card[data-style="media"] .dot-liq { fill: var(--media-liq); }
+
+    .sym-outline { fill: none; stroke: var(--hair-stroke); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+    .sym-detail  { fill: none; stroke: var(--hair-subtle); stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; }
+    .sym-dashed  { fill: none; stroke: var(--hair-subtle); stroke-width: 1.05; stroke-dasharray: 3 3; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* BADGES IMMER PER FILL DECKEND IM VORDERGRUND */
+    .badge-sensor, .badge-relay, .badge-pwm, .badge-input24v {
+      stroke-width: 1.2;
+      stroke-linejoin: round;
+      fill: var(--canvas-bg);
+      transition: stroke 0.2s ease, fill 0.2s ease;
+    }
+    .badge-sensor   { stroke: var(--hair-stroke); }
+    .badge-relay    { stroke: var(--hair-stroke); }
+    .badge-pwm      { stroke: var(--hair-stroke); }
+    .badge-input24v { stroke: var(--hair-stroke); }
+
+    .flow-card[data-style="media"] .badge-sensor   { stroke: var(--media-sensor); fill: color-mix(in oklab, var(--media-sensor) 22%, var(--canvas-bg)); }
+    .flow-card[data-style="media"] .badge-relay    { stroke: var(--media-relay);  fill: color-mix(in oklab, var(--media-relay) 22%, var(--canvas-bg)); }
+    .flow-card[data-style="media"] .badge-pwm      { stroke: var(--media-pwm);    fill: color-mix(in oklab, var(--media-pwm) 22%, var(--canvas-bg)); }
+    .flow-card[data-style="media"] .badge-input24v { stroke: var(--media-in24);   fill: color-mix(in oklab, var(--media-in24) 22%, var(--canvas-bg)); }
+
+    .badge-text {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      text-anchor: middle;
+      dominant-baseline: central;
+      fill: var(--text-primary);
+    }
+    .flow-card[data-style="media"] .text-sensor { fill: var(--media-sensor); }
+    .flow-card[data-style="media"] .text-relay  { fill: var(--media-relay); }
+    .flow-card[data-style="media"] .text-pwm    { fill: var(--media-pwm); }
+    .flow-card[data-style="media"] .text-in24   { fill: var(--media-in24); }
+
+    .inst-text { fill: var(--text-primary); font-family: var(--font-mono); font-size: 12px; font-weight: 600; dominant-baseline: central; }
+    .lbl-main { fill: var(--text-primary); font-size: 13px; font-weight: 600; dominant-baseline: central; }
+    .lbl-sub  { fill: var(--hair-subtle); font-size: 11px; font-weight: 400; dominant-baseline: central; }
+    .lbl-mono { fill: var(--text-primary); font-family: var(--font-mono); font-size: 11px; font-weight: 600; dominant-baseline: central; }
+
+    /* Hinweiskasten */
+    .note-box {
+      margin-top: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--border-separator);
+      background: var(--surface-inner-bg);
+      font-size: var(--text-sub);
+    }
+    .note-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.625rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .note-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-canvas" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <nav class="app-topbar" aria-label="Navigation">
+      <a class="back-btn" href="../index.html">
+        <span class="material-symbols-rounded" aria-hidden="true">arrow_back_ios</span>
+        <span>Übersicht</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <div class="scheme-select-wrapper">
+  <select id="schemaQuickSelect" class="scheme-select" aria-label="Schema wechseln">
+    <optgroup label="Standardschemen">
+      <option value="111_000">111_000 · Direktkreis mit Boiler</option>
+      <option value="112_000">112_000 · 2-Speicherlösung mit Boiler und Pufferspeicher</option>
+      <option value="114_000">114_000 · 2-Speicherlösung Puffer / Boiler</option>
+      <option value="121_000">121_000 · Direktkreis mit Frischwassersystem (FWS)</option>
+      <option value="122_000">122_000 · 2-Speicherlösung mit Frischwassersystem</option>
+      <option value="123_000">123_000 · Kombispeicher mit Frischwassersystem</option>
+      <option value="131_000">131_000 · Direktkreis mit Hygienespeicher</option>
+      <option value="132_000">132_000 · 2-Speicherlösung mit Hygienespeicher</option>
+      <option value="133_000">133_000 · Kombispeicher mit Hygiene-Wellrohr</option>
+    </optgroup>
+    <optgroup label="Sonderschemen & Kaskaden">
+      <option value="222_000">222_000 · 2er-Kaskade mit 2 Puffern & FWS</option>
+      <option value="312_000">312_000 · 3er-Kaskade mit Boiler & Puffer</option>
+      <option value="122_030" selected>122_030 · 2-Speicher mit FWS & Solaranlage</option>
+      <option value="132_300">132_300 · 2-Speicher mit Hygiene & 2. WEZ</option>
+      <option value="ECO_SPEICHER">ECO-Speicher · Vorverkabelte Kompakt-Zentrale</option>
+    </optgroup>
+  </select>
+</div>
+        <button class="icon-btn" id="themeToggleBtn" type="button" aria-label="Theme umschalten">
+          <span class="material-symbols-rounded" id="themeToggleIcon">light_mode</span>
+        </button>
+      </div>
+    </nav>
+
+    <header class="app-header">
+      <h1 class="brand-title">Lambda Wärmepumpen (EU10–20L)</h1>
+      <p class="brand-subtitle">Sonderschema · Solarunterstützung</p>
+    </header>
+
+    <main>
+      <section class="flow-card" id="flowCard" data-style="media">
+        <div class="flow-card-header">
+          <div>
+            <h2 class="flow-card-title">122_030 · 2-Speicher mit FWS & Solaranlage</h2>
+            <p class="flow-card-sub">Solarthermische Einbindung auf Brauchwasserpuffer (FWS) und Heizungspuffer über Solar-USV X13 und Solarpumpe X5.</p>
+          </div>
+          <div class="segmented-control" id="styleSegment" role="group" aria-label="Darstellungsstil">
+            <button class="segmented-option" type="button" data-style="media" aria-pressed="true">Medienfarben</button>
+            <button class="segmented-option" type="button" data-style="hairline" aria-pressed="false">Hairline pur</button>
+          </div>
+        </div>
+
+        <div class="flow-scroll" tabindex="0" role="region" aria-label="Prinzipschema 2D-R&amp;I Fließbild">
+          <svg class="flow-svg" id="flowSvg" viewBox="0 0 1000 450" role="img" aria-label="Lambda Prinzipschema 122_030">
+
+            <!-- 1. Außeneinheit Lambda EU10–20L (Monoblock) -->
+            <g id="grp-outdoor">
+              <rect x="20" y="140" width="76" height="120" rx="4" fill="none" class="sym-outline" />
+              <rect x="28" y="260" width="60" height="8" rx="2" fill="none" class="sym-detail" />
+              <path d="M34,152 C46,168 50,188 48,206 C46,224 38,240 32,252" class="sym-detail" />
+              <path d="M48,186 C58,180 70,182 82,188" class="sym-detail" />
+              <path d="M48,206 C60,212 70,224 78,238" class="sym-detail" />
+              <text x="58" y="130" class="lbl-main" text-anchor="middle">Lambda EU</text>
+              <text x="58" y="278" class="lbl-sub" text-anchor="middle">Fundament</text>
+              <path d="M45,260 V295" class="sym-detail" />
+              <line x1="38" y1="295" x2="52" y2="295" class="sym-detail" />
+              <text x="45" y="310" class="lbl-sub" text-anchor="middle">DN100</text>
+            </g>
+
+            <!-- 2. Sicherheitsgruppe außen am Vorlauf -->
+            <g id="grp-safety-ext">
+              <path d="M85,250 V270" class="pipe-base seg-hot" />
+              <path d="M85,270 H165" class="pipe-base seg-hot" />
+              <circle cx="130" cy="230" r="4.5" fill="none" class="sym-outline" />
+              <path d="M130,270 V235" class="sym-detail" />
+              <polygon points="126,235 134,235 130,227" class="sym-outline" />
+              <text x="130" y="220" class="lbl-sub" text-anchor="middle">SV</text>
+            </g>
+
+            <!-- 3. Entleerung außen am Rücklauf -->
+            <g id="grp-drain-ext">
+              <path d="M64,250 V305" class="pipe-base seg-liq" />
+              <path d="M64,305 H165" class="pipe-base seg-liq" />
+              <path d="M64,305 V330" class="sym-detail" />
+              <polygon points="60,324 68,324 64,330" class="sym-outline" />
+              <text x="64" y="344" class="lbl-sub" text-anchor="middle">Entleerung</text>
+            </g>
+        
+
+        <!-- 4. Gebäudewand mit 45°-Schraffur (x=165..185) -->
+        <g id="grp-wall">
+          <line x1="165" y1="50" x2="165" y2="400" class="sym-outline" />
+          <line x1="185" y1="50" x2="185" y2="400" class="sym-outline" />
+          <path d="M165,70 L185,50 M165,100 L185,80 M165,130 L185,110 M165,160 L185,140 M165,190 L185,170 M165,220 L185,200 M165,250 L185,230 M165,280 L185,260 M165,310 L185,290 M165,340 L185,320 M165,370 L185,350 M165,400 L185,380" class="sym-detail" />
+          <text x="175" y="42" class="lbl-sub" text-anchor="middle">Außenwand</text>
+          <!-- Außenfühler X42 -->
+          <circle cx="175" cy="85" r="11" class="badge-sensor" />
+          <text x="175" y="85" class="badge-text text-sensor">X42</text>
+          <text x="145" y="85" class="lbl-sub" text-anchor="end">Außenfühler</text>
+        </g>
+
+        <!-- 5. Entleerung innen nach Mauerdurchführung -->
+        <g id="grp-drain-int">
+          <path d="M185,270 H270 Q280,270 280,260 V195 Q280,185 285,185" class="pipe-base seg-hot" />
+          <path d="M280,305 H185" class="pipe-base seg-liq" />
+          <path d="M208,270 V330 M228,305 V330" class="sym-detail" />
+          <polygon points="204,324 212,324 208,330" class="sym-outline" />
+          <polygon points="224,324 232,324 228,330" class="sym-outline" />
+          <text x="218" y="344" class="lbl-sub" text-anchor="middle">Entleerung innen</text>
+        </g>
+    
+
+            <!-- 6. Hydraulikmodul (Inneneinheit x=275..375, y=125..320) -->
+            <g id="grp-hydr-mod">
+              <!-- Gestrichelter Rahmen endet bei y=320, damit ADG sauber außerhalb liegt -->
+              <rect x="275" y="125" width="100" height="195" rx="3" fill="none" class="sym-dashed" />
+              <text x="325" y="115" class="lbl-sub" text-anchor="middle">Hydraulikmodul</text>
+
+              <!-- Dreiwege-Umschaltventil USV X28 (x=305, y=185) -->
+              <polygon points="285,180 285,190 300,185" class="sym-outline" />
+              <polygon points="325,185 310,180 310,190" class="sym-outline" />
+              <polygon points="300,172 310,172 305,182" class="sym-outline" />
+              <circle cx="305" cy="185" r="1.5" class="port-dot" />
+
+              <!-- Klemmen-Badge X28 deckend im Vordergrund platziert -->
+              <circle cx="305" cy="146" r="11" class="badge-relay" />
+              <text x="305" y="146" class="badge-text text-relay">X28</text>
+
+              <!-- Elektro-Heizstab X9 (x=335..353, y=178..192) -->
+              <rect x="335" y="178" width="18" height="14" fill="none" class="sym-outline" />
+              <path d="M339,181 L344,189 L349,181" class="sym-detail" />
+              <circle cx="344" cy="146" r="11" class="badge-relay" />
+              <text x="344" y="146" class="badge-text text-relay">X9</text>
+
+              <!-- Ladepumpe Primärkreis X2 / X57 (x=320, y=305) -->
+              <circle cx="320" cy="305" r="12" fill="none" class="sym-outline" />
+              <polygon points="326,299 326,311 314,305" class="sym-outline" />
+              <circle cx="305" cy="265" r="11" class="badge-relay" />
+              <text x="305" y="265" class="badge-text text-relay">X2</text>
+              <circle cx="335" cy="265" r="11" class="badge-pwm" />
+              <text x="335" y="265" class="badge-text text-pwm">X57</text>
+
+              <!-- Rückschlagventil im Rücklauf -->
+              <polygon points="295,300 295,310 287,305" class="sym-outline" />
+              <line x1="287" y1="299" x2="287" y2="311" class="sym-detail" />
+            </g>
+
+            <!-- 7. ADG Membran-Ausdehnungsgefäß KLAR AUSSERHALB des Rahmens (y=350..380) -->
+            <g id="grp-adg">
+              <path d="M360,305 V350" class="sym-detail" />
+              <circle cx="360" cy="362" r="10" fill="none" class="sym-outline" />
+              <path d="M351,362 Q360,357 369,362" class="sym-detail" />
+              <text x="360" y="386" class="lbl-sub" text-anchor="middle">ADG</text>
+            </g>
+
+            <!-- 8. Regelung AHC & Touch-Display -->
+            <g id="grp-ctrl">
+              <rect x="408" y="125" width="38" height="26" rx="3" fill="none" class="sym-outline" />
+              <circle cx="427" cy="136" r="3.5" fill="none" class="sym-detail" />
+              <path d="M427,136 V144" class="sym-detail" />
+              <text x="427" y="115" class="lbl-sub" text-anchor="middle">Display</text>
+
+              <rect x="402" y="165" width="50" height="36" rx="2" fill="none" class="sym-outline" />
+              <text x="427" y="183" class="inst-text" text-anchor="middle">AHC</text>
+              <path d="M427,201 V390" class="sym-dashed" />
+              <text x="427" y="405" class="lbl-sub" text-anchor="middle">RJ45 / 230V</text>
+            </g>
+
+            <!-- 9. KOLLISIONSFREIE ROHRFÜHRUNG UM X28 HERUM -->
+            <!-- Warmwasservorlauf (WW) über oberen Korridor y=75 -->
+            <g class="pipe-group-ww">
+              <!-- Rohrleitung führt sauber im Radius um Klemmenbadge X28 herum -->
+              <path d="M305,172 V162 Q305,158 318,158 V134 Q318,130 305,130 V75 H505 Q515,75 515,85 V175 H525" class="pipe-base seg-hot" />
+              <path d="M305,172 V162 Q305,158 318,158 V134 Q318,130 305,130 V75 H505 Q515,75 515,85 V175 H525" class="pipe-flow seg-hot" />
+              <circle cx="525" cy="175" r="2.2" class="port-dot dot-hot" />
+            </g>
+        
+
+            <!-- Brauchwasserpuffer mit Frischwassersystem (FWS) -->
+            <g id="grp-fws-tank">
+              <rect x="525" y="140" width="60" height="170" rx="14" fill="none" class="sym-outline" />
+              <text x="555" y="130" class="lbl-main" text-anchor="middle">WW-Puffer</text>
+              <circle cx="555" cy="155" r="11" class="badge-sensor" />
+              <text x="555" y="155" class="badge-text text-sensor">X35</text>
+              <circle cx="555" cy="295" r="11" class="badge-sensor" />
+              <text x="555" y="295" class="badge-text text-sensor">X36</text>
+
+              <!-- FWS Modul rechts am Puffer -->
+              <rect x="595" y="150" width="46" height="120" rx="4" fill="none" class="sym-outline" />
+              <text x="618" y="142" class="lbl-sub" text-anchor="middle">FWS</text>
+              <!-- Plattenwärmetauscher Symbol -->
+              <path d="M605,165 V215 M613,165 V215 M621,165 V215" class="sym-detail" />
+              <!-- FWS Ladepumpe X2/X56 -->
+              <circle cx="618" cy="235" r="8" fill="none" class="sym-outline" />
+              <circle cx="618" cy="255" r="9" class="badge-pwm" />
+              <text x="618" y="255" class="badge-text text-pwm">X56</text>
+              <!-- Strömungsschalter X60 & Auslauffühler X32 -->
+              <circle cx="645" cy="170" r="9" class="badge-sensor" />
+              <text x="645" y="170" class="badge-text text-sensor">X32</text>
+              <circle cx="645" cy="200" r="9" class="badge-input24v" />
+              <text x="645" y="200" class="badge-text text-in24">X60</text>
+              <!-- Trinkwasseranschlüsse -->
+              <path d="M641,160 H665" class="pipe-base seg-hot" />
+              <text x="675" y="160" class="lbl-mono" text-anchor="start">WW</text>
+              <path d="M641,215 H665" class="pipe-base seg-liq" />
+              <text x="675" y="215" class="lbl-mono" text-anchor="start">KW</text>
+              <!-- Puffer Rücklauf -->
+              <path d="M525,295 H505 V335 H395 Q385,335 385,325 V315 Q385,305 375,305 H280" class="pipe-base seg-liq" />
+            </g>
+        
+
+            <!-- Solaranlage (Kollektor + Solarstation X13 / X5) -->
+            <g id="grp-solar">
+              <!-- Solarkollektor auf Dach -->
+              <rect x="545" y="35" width="90" height="30" rx="3" fill="none" class="sym-outline" stroke="var(--system-orange)" />
+              <line x1="565" y1="35" x2="565" y2="65" class="sym-detail" stroke="var(--system-orange)" />
+              <line x1="585" y1="35" x2="585" y2="65" class="sym-detail" stroke="var(--system-orange)" />
+              <line x1="605" y1="35" x2="605" y2="65" class="sym-detail" stroke="var(--system-orange)" />
+              <line x1="625" y1="35" x2="625" y2="65" class="sym-detail" stroke="var(--system-orange)" />
+              <text x="590" y="26" class="badge-text text-in24" text-anchor="middle">Solarthermie</text>
+
+              <!-- Solar-Umschaltventil X13 & Solarpumpe X5 -->
+              <circle cx="655" cy="50" r="11" class="badge-relay" />
+              <text x="655" y="50" class="badge-text text-relay">X13</text>
+              <circle cx="685" cy="50" r="11" class="badge-relay" />
+              <text x="685" y="50" class="badge-text text-relay">X5</text>
+              <path d="M635,50 H670 V105 H555" class="sym-detail" stroke="var(--system-orange)" />
+            </g>
+        
+
+                <!-- Pufferspeicher (Heizung rechts x=655..715, y=140..310) -->
+                <g id="grp-puffer">
+                  <rect x="655" y="140" width="60" height="170" rx="14" fill="none" class="sym-outline" />
+                  <text x="685" y="130" class="lbl-main" text-anchor="middle">Puffer</text>
+                  <!-- Vorlauf von E-Heizstab X9 über mittleren Korridor y=105 in den Puffer -->
+                  <path d="M353,185 H370 Q380,185 380,175 V115 Q380,105 390,105 H645 Q655,105 655,115 V175" class="pipe-base seg-hot" />
+                  <circle cx="655" cy="175" r="2.2" class="port-dot dot-hot" />
+                  <!-- Puffertemperaturfühler X31 oben -->
+                  <circle cx="685" cy="155" r="11" class="badge-sensor" />
+                  <text x="685" y="155" class="badge-text text-sensor">X31</text>
+                  <!-- Puffer Rücklauf nach unten -->
+                  <path d="M655,305 H645 Q635,305 635,315 V335 H505" class="pipe-base seg-liq" />
+                  <circle cx="655" cy="305" r="2.2" class="port-dot dot-liq" />
+                </g>
+            
+
+            <!-- Heizkreis-Verteiler Vorlauf & Rücklauf -->
+            <path d="M715,175 H735 Q745,175 745,185 V255 Q745,265 755,265 H860" class="pipe-base seg-hot" />
+            <path d="M885,295 H735 Q725,295 725,305 V305 H715" class="pipe-base seg-liq" />
+
+            <!-- Gemischter Heizkreis HKR 1 (Aktiv, x=780) -->
+            <g id="grp-hkr1">
+              <path d="M780,265 V55 H805 V75" class="pipe-base seg-hot" />
+              <path d="M805,75 V295" class="pipe-base seg-liq" />
+              <text x="792" y="38" class="inst-text" text-anchor="middle">HKR 1</text>
+
+              <!-- 3-Wege-Mischer X11 bei y=245 -->
+              <polygon points="774,240 786,240 780,248" class="sym-outline" />
+              <polygon points="774,256 786,256 780,248" class="sym-outline" />
+              <polygon points="792,248 780,248 786,242" class="sym-outline" />
+              <path d="M805,248 H792" class="pipe-base seg-liq" />
+              <circle cx="746" cy="245" r="11" class="badge-relay" />
+              <text x="746" y="245" class="badge-text text-relay">X11</text>
+
+              <!-- Umwälzpumpe X7 bei y=205 -->
+              <circle cx="780" cy="205" r="10" fill="none" class="sym-outline" />
+              <polygon points="774,211 786,211 780,199" class="sym-outline" />
+              <circle cx="746" cy="205" r="11" class="badge-relay" />
+              <text x="746" y="205" class="badge-text text-relay">X7</text>
+
+              <!-- Schwerkraftbremse bei y=175 & Vorlauffühler X37 bei y=145 -->
+              <polygon points="775,178 785,178 780,170" class="sym-outline" />
+              <line x1="774" y1="170" x2="786" y2="170" class="sym-detail" />
+              <circle cx="746" cy="145" r="11" class="badge-sensor" />
+              <text x="746" y="145" class="badge-text text-sensor">X37</text>
+            </g>
+
+            <!-- Gemischter Heizkreis HKR 2 (Modular, x=860) -->
+            <g id="grp-hkr2">
+              <path d="M860,265 V55 H885 V75" class="sym-dashed" />
+              <path d="M885,75 V295" class="sym-dashed" />
+              <text x="872" y="38" class="inst-text" text-anchor="middle">HKR 2</text>
+              <polygon points="854,240 866,240 860,248" class="sym-dashed" />
+              <circle cx="896" cy="245" r="11" class="badge-relay" />
+              <text x="896" y="245" class="badge-text text-relay">X12</text>
+              <circle cx="860" cy="205" r="10" fill="none" class="sym-dashed" />
+              <polygon points="854,211 866,211 860,199" class="sym-dashed" />
+              <circle cx="896" cy="205" r="11" class="badge-relay" />
+              <text x="896" y="205" class="badge-text text-relay">X8</text>
+              <circle cx="896" cy="145" r="11" class="badge-sensor" />
+              <text x="896" y="145" class="badge-text text-sensor">X38</text>
+            </g>
+        
+          </svg>
+        </div>
+
+        <p class="flow-pan-hint">Schema zum Verschieben seitlich wischen.</p>
+
+        <div class="note-box">
+          <div class="note-title">
+            <span class="material-symbols-rounded" aria-hidden="true">info</span>
+            ZU BEACHTEN (Prinzipschema 122_030 · Stand 2026/2):
+          </div>
+          <ul class="note-list">
+            <li><strong>Solar-Umschaltung:</strong> Solaranlage über Solar-USV X13 und Solarpumpe X5 umschaltbar auf beide Speicher eingebunden.</li>
+            <li><strong>Puffervolumen Brauchwasser:</strong> Mindestens 500 l Puffervolumen für Brauchwasser vorsehen.</li>
+            <li><strong>Puffervolumen Heizung:</strong> Mindestens 6,4 l/kW Nennleistung als Puffervolumen für Heizung vorsehen.</li>
+            <li><strong>Zapfleistung FWS:</strong> Maximale Zapfleistung des Frischwassersystems beachten.</li>
+            <li><strong>Aktive Kühlung:</strong> Taupunkt bei aktiver Kühlung zwingend beachten.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var card = document.getElementById("flowCard");
+      var styleSeg = document.getElementById("styleSegment");
+      if (styleSeg && card) {
+        styleSeg.addEventListener("click", function (e) {
+          var btn = e.target.closest("button[data-style]");
+          if (!btn) return;
+          styleSeg.querySelectorAll("button").forEach(function (b) {
+            b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+          });
+          card.setAttribute("data-style", btn.getAttribute("data-style"));
+        });
+      }
+      var themeBtn = document.getElementById("themeToggleBtn");
+      var themeIcon = document.getElementById("themeToggleIcon");
+      if (themeBtn && themeIcon) {
+        var cur = document.documentElement.getAttribute("data-theme") || "dark";
+        themeIcon.textContent = cur === "dark" ? "light_mode" : "dark_mode";
+        themeBtn.addEventListener("click", function () {
+          var c = document.documentElement.getAttribute("data-theme") || "dark";
+          var next = c === "dark" ? "light" : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try { localStorage.setItem("ag-theme", next); } catch (e) {}
+          themeIcon.textContent = next === "dark" ? "light_mode" : "dark_mode";
+        });
+      }
+      var select = document.getElementById("schemaQuickSelect");
+      if (select) {
+        select.addEventListener("change", function () {
+          window.location.href = "lambda-eu10-20l-schema-" + select.value + ".html";
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
