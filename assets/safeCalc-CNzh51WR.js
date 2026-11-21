@@ -1,0 +1,1 @@
+import{z as e}from"./index-Ck1flspg.js";function t(t){let n=e(t);if(n===null)throw Error(`Bitte alle Felder mit gültigen Zahlen ausfüllen.`);return n}function n(e){try{return{result:e(),error:null}}catch(e){return{result:null,error:e instanceof Error?e.message:`Berechnungsfehler`}}}export{n,t};
