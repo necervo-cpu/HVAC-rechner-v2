@@ -1,1 +1,0 @@
-function e(e){if(!Number.isFinite(e)||e<0)throw Error(`Dauer muss eine Zahl ≥ 0 sein.`);let t=Math.round(e*60);return{hours:Math.floor(t/60),minutes:t%60}}function t(t){let{hours:n,minutes:r}=e(t);return n===0?`${r} min`:`${n} h ${String(r).padStart(2,`0`)} min`}export{e as n,t};

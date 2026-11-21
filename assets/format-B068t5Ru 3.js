@@ -1,1 +1,0 @@
-function e(e,t){return Number.isFinite(e)?e.toFixed(t).replace(`.`,`,`):`—`}function t(e,t=2){return Number.isFinite(e)?String(Number(e.toFixed(t))).replace(`.`,`,`):`—`}function n(e,t=4){return Number.isFinite(e)?e===0?`0`:String(Number(e.toPrecision(t))).replace(`.`,`,`):`—`}export{n,t as r,e as t};
