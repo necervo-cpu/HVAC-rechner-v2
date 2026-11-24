@@ -2,17 +2,35 @@
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content"
+    />
     <meta name="color-scheme" content="dark light" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="HVAC-R Rechner" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F5F5F7" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0A0A0B" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F8FAFC" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
     <title>HVAC-R Baustellen-Rechner</title>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="apple-touch-icon" href="./pwa-icon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      id="agFonts"
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
     <script>
       (function () {
         var root = document.documentElement, saved = null;
@@ -21,9 +39,10 @@
         root.setAttribute('data-theme', saved === 'light' || saved === 'dark' ? saved : (light ? 'light' : 'dark'));
       })();
     </script>
-    <script type="module" crossorigin src="./assets/index-c_hftQj2.js"></script>
+    <style>select.ag-select-input{appearance:none}select.ag-select-input::picker-icon{display:none}</style>
+    <script type="module" crossorigin src="./assets/index-DL6rIDkR.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/fgas-BE4F3OCa.js">
-    <link rel="stylesheet" crossorigin href="./assets/index-H4Hzv8GG.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-CgZxaqwC.css">
   <link rel="manifest" href="./manifest.webmanifest"></head>
   <body>
     <div id="root"></div>
