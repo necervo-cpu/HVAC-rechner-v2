@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -11,38 +11,35 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="HVAC-R Rechner" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F8FAFC" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0B0C0E" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F2F7" />
     <title>HVAC-R Baustellen-Rechner</title>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="apple-touch-icon" href="./pwa-icon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      id="agFonts"
-      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
     <script>
       (function () {
-        var root = document.documentElement, saved = null;
-        try { saved = localStorage.getItem('ag-theme'); } catch (e) {}
-        var light = window.matchMedia('(prefers-color-scheme: light)').matches;
-        root.setAttribute('data-theme', saved === 'light' || saved === 'dark' ? saved : (light ? 'light' : 'dark'));
+        var theme = 'dark';
+        try {
+          var saved = localStorage.getItem('ag-theme');
+          if (saved === 'light' || saved === 'dark') {
+            theme = saved;
+          } else if (
+            saved === 'system' &&
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: light)').matches
+          ) {
+            theme = 'light';
+          }
+        } catch (e) {
+          theme = 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
       })();
     </script>
     <style>select.ag-select-input{appearance:none}select.ag-select-input::picker-icon{display:none}</style>
-    <script type="module" crossorigin src="./assets/index-BHXQhr9K.js"></script>
+    <script type="module" crossorigin src="./assets/index-BwhWtaVG.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/fgas-BE4F3OCa.js">
-    <link rel="stylesheet" crossorigin href="./assets/index-BigTtwMD.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-DgXST1Ea.css">
   <link rel="manifest" href="./manifest.webmanifest"></head>
   <body>
     <div id="root"></div>
