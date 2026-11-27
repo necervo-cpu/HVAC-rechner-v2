@@ -1,0 +1,1 @@
+var e=6.112,t={a:17.62,b:243.12},n={a:22.46,b:272.62};function r(n){return e*Math.exp(t.a*n/(t.b+n))}function i(t){return e*Math.exp(n.a*t/(n.b+t))}function a(e){return e<0?i(e):r(e)}function o(r){let i=r<e,{a,b:o}=i?n:t,s=Math.log(r/e);return{tempC:o*s/(a-s),isFrostPoint:i}}function s(t,i){let a=i/100*r(t),o=Math.log(a/e);return n.b*o/(n.a-o)}export{s as n,a as r,o as t};
